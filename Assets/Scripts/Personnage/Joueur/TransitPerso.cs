@@ -109,21 +109,28 @@ public class TransitPerso : MonoBehaviour
         bool raycast = Physics.Raycast(transform.position, rayonCam.direction, out infoCollision, distanceMax);
         pourcentageTransitActuel -= 15f;
 
-        if (raycast)
+        //if (raycast)
+        //{
+        //    // Vérifier si un mur est devant le joueur pour éviter qu'il ne passe à travers
+        //    if (Vector3.Distance(transform.position, infoCollision.transform.position) < distanceMaxY)
+        //    {
+        //        positionCible = infoCollision.point;
+        //    }
+        //    else
+        //    {
+        //        positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
+        //    }
+        //}
+        //else
+        //{
+        //    positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
+        //}
+
+        positionCible = rayonCam.direction * distanceMax;
+
+        if (Physics.Raycast(transform.position, positionCible, out infoCollision, distanceMax))
         {
-            // Vérifier si un mur est devant le joueur pour éviter qu'il ne passe à travers
-            if (Vector3.Distance(transform.position, infoCollision.transform.position) < distanceMaxY)
-            {
-                positionCible = infoCollision.point;
-            }
-            else
-            {
-                positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
-            }
-        }
-        else
-        {
-            positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
+            positionCible = infoCollision.point - transform.position;
         }
 
         GetComponent<Rigidbody>().AddForce(positionCible, ForceMode.Impulse);

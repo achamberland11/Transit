@@ -110,11 +110,6 @@ public class GestionnaireDialogues : MonoBehaviour
             StopAllCoroutines(); // Permet d'arrêter l'effet de machine à écrire si le joueur passe au prochain dialogue avant sa fin
             StartCoroutine(EcrireDialogue(dialogue));
 
-            if(dialogue == "...")
-            {
-                Debug.Log("Ça Marche!!!!!");
-            }
-
             // Change la caméra et le nom de la personne qui parle lorsque le nombre de dialogue restant est pair
             // Une conversation doit donc avoir un nombre de dialogue impair pour que ceci fonctionne
             // Montre le PNJ lorsque c'est pair et le joueur lorsque c'est impair
