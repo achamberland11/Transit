@@ -104,9 +104,8 @@ public class TransitPerso : MonoBehaviour
     /// </summary>
     void ActiverTransit()
     {
-        Ray rayonCam = cam.ScreenPointToRay(Input.mousePosition);
+        Ray rayonCam = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit infoCollision;
-        bool raycast = Physics.Raycast(transform.position, rayonCam.direction, out infoCollision, distanceMax);
         pourcentageTransitActuel -= 15f;
 
         //if (raycast)
@@ -126,11 +125,15 @@ public class TransitPerso : MonoBehaviour
         //    positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
         //}
 
-        positionCible = rayonCam.direction * distanceMax;
+        positionCible = rayonCam.direction * distanceMax + gameObject.transform.up * distanceMaxY;
 
-        if (Physics.Raycast(transform.position, positionCible, out infoCollision, distanceMax))
+        if (Physics.Raycast(transform.position, transform.forward, out infoCollision, 10f))
         {
-            positionCible = infoCollision.point - transform.position;
+            GameObject objetCollision = infoCollision.transform.gameObject;
+            if(objetCollision.tag == "Environnement")
+            {
+                positionCible = infoCollision.point - transform.position;
+            }
         }
 
         GetComponent<Rigidbody>().AddForce(positionCible, ForceMode.Impulse);
